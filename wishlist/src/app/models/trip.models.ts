@@ -1,9 +1,10 @@
 export class destino{
-    name:string;
-    url:string;
-
-    constructor(n:string, u:string){
-        this.name = n;
-        this.url = u;
+    private selected: boolean = false;
+    constructor(public n:string, public u:string){}
+    isSelected(): boolean {
+        return this.selected;
+    }
+    setSelected(s: boolean){
+        this.selected = s;
     }
 }

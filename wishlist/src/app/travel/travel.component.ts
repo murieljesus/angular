@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, EventEmitter, Output } from '@angular/core';
 import { destino } from '../models/trip.models';
 
 
@@ -10,10 +10,18 @@ import { destino } from '../models/trip.models';
 export class TravelComponent implements OnInit {
   @Input()
   destination!: destino;
+  @Output()
+  clicked!: EventEmitter<destino>;
   
-  constructor() {}
+  constructor() {
+    this.clicked = new EventEmitter();
+  }
 
   ngOnInit(): void {
+  }
+  see(){
+    this.clicked.emit(this.destination);
+    return false;
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="card card-description  justify-content-between ml-2">
     <img class="card-img-top " src="https://placeimg.com/180/230/nature" alt="">
     <div class="card-body ">
-        <h5 class="card-title ">{{ destination.name }}
+        <h5 class="card-title ">{{ destination.n }}
             <span class="badge badge-warning " data-toggle="popover" data-placement="top" data-content="35% de descuento"> Descuento</span>
         </h5>
 
@@ -10,9 +10,9 @@
         <p class="card-text ">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
     </div>
     <div>
-        <button class="btn btn-style btn-success " type="button ">
-                Reservar
-                <span class="oi oi-check " style="color:black "></span>
-            </button>
+        <button class="btn btn-style btn-success " type="button" (click)="see()">
+            Ver
+        </button>
+        <span [style.display]="destination.isSelected() ? '' : 'none'">-Favorito-</span>
     </div>
 </div>

@@ -17,7 +17,11 @@ destination: destino[];
   }
   save(name:string,url:string):boolean{
     this.destination.push(new destino(name,url));
-    console.log(this.destination);
     return false;
+  }
+  chosen(d: destino){
+    this.destination.forEach(function (x){x.setSelected(false)});
+    d.setSelected(true);
+
   }
 }
