@@ -25,7 +25,7 @@
 
 <hr>
 <div class="card-columns">
-    <app-travel *ngFor="let d of destination" [destination]="d" (clicked)="chosen(d)">
+    <app-travel *ngFor="let d of destination; let i=index" [destination]="d" [position]="i+1" (clicked)="chosen(d)">
     </app-travel>
 
 </div>

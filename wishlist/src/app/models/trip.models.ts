@@ -1,6 +1,9 @@
 export class destino{
     private selected: boolean = false;
-    constructor(public n:string, public u:string){}
+    public service: string[];
+    constructor(public n:string, public u:string){
+        this.service=['desayuno',  'pileta'];
+    }
     isSelected(): boolean {
         return this.selected;
     }

@@ -10,6 +10,8 @@ import { destino } from '../models/trip.models';
 export class TravelComponent implements OnInit {
   @Input()
   destination!: destino;
+  @Input()
+  position!: number;
   @Output()
   clicked!: EventEmitter<destino>;
   
