@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { destino } from '../models/trip.models';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { destino } from './../models/trip.models';
+import {DestApiClient} from './../models/dest-api-client.model';
 
 @Component({
   selector: 'app-list',
@@ -7,21 +8,24 @@ import { destino } from '../models/trip.models';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-destination: destino[];
-  constructor() { 
-    this.destination=[];
+  @Output() onItemAdded: EventEmitter<destino>;
+//destination: destino[];
+  constructor(public destApiClient: DestApiClient) { 
+    this.onItemAdded = new EventEmitter();
+    //this.destination=[];
   }
 
 
   ngOnInit(): void {
   }
-  save(name:string,url:string):boolean{
-    this.destination.push(new destino(name,url));
-    return false;
+  save(d: destino){
+    this.destApiClient.add(d);
+    this.onItemAdded.emit(d);
   }
-  chosen(d: destino){
-    this.destination.forEach(function (x){x.setSelected(false)});
-    d.setSelected(true);
+
+  chosen(e: destino){
+    this.destApiClient.getAll().forEach(x => x.setSelected(false));
+    e.setSelected(true);
 
   }
 }

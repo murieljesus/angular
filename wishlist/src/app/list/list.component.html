@@ -6,26 +6,15 @@
                 wishlist
             </h3>
         </div>
-        <form action="">
-            <div class="card-body">
-                <div class="form-group col">
-                    <label for="name"> Nombre</label>
-                    <input type="text" class="form-control" id="name" placeholder="" #name>
-                </div>
-                <div class="form-group col">
-                    <label for="image"> Url</label>
-                    <input type="text" class="form-control" id="url" placeholder="" #url>
-                </div>
-                <button type="submit" class="btn btn-primary" (click)="save(name.value, url.value)"> Enviar</button>
-            </div>
-        </form>
+        <app-form-trip (onItemAdded)="save($event)"></app-form-trip>
+
     </div>
 
 </div>
 
 <hr>
 <div class="card-columns">
-    <app-travel *ngFor="let d of destination; let i=index" [destination]="d" [position]="i+1" (clicked)="chosen(d)">
+    <app-travel *ngFor="let d of destApiClient.getAll(); let i=index" [destination]="d" [position]="i+1" (clicked)="chosen($event)">
     </app-travel>
 
 </div>

@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { TravelComponent } from './travel/travel.component';
 import { ListComponent } from './list/list.component';
 import { DetailComponent } from './detail/detail.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormTripComponent } from './form-trip/form-trip.component';
+import { DestApiClient} from './models/dest-api-client.model';
 
 const routes: Routes =[
   {path: '',redirectTo:'home', pathMatch:'full'},
@@ -20,14 +23,20 @@ const routes: Routes =[
     AppComponent,
     TravelComponent,
     ListComponent,
-    DetailComponent
+    DetailComponent,
+    FormTripComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [
+    DestApiClient
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
