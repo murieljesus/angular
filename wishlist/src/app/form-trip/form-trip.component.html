@@ -3,8 +3,10 @@
         <div class="form-group col">
             <label for="name"> Nombre</label>
             <input type="text" class="form-control" id="name" placeholder="ingrese su nombre" formControlName='name' />
-            <div *ngIf="!fg.controls['name'].valid" style="color: red;">nombre invalido</div>
-            <div *ngIf="fg.controls['name'].hasError('required')">nombre no puede ser vacio</div>
+            <div *ngIf="fg.controls['name'].hasError('required')" style="font-weight: bold;">nombre no puede ser vacio</div>
+            <div *ngIf="fg.controls['name'].hasError('invalidName')" style="font-weight: bold;">nombre inavalido</div>
+            <div *ngIf="fg.controls['name'].hasError('longName')" style="font-weight: bold;">debe contener {{ minLon }} caracteres</div>
+
         </div>
         <div class="form-group col">
             <label for="image"> Url</label>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {destino} from '../models/trip.models';
 
 @Component({
@@ -10,12 +10,17 @@ import {destino} from '../models/trip.models';
 export class FormTripComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<destino>;
   fg: FormGroup;
+  minLon = 3;
   constructor(private fb: FormBuilder) {
     //init
     this.onItemAdded = new EventEmitter();
     //vinculacion con tag html
     this.fg = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', Validators.compose([
+        Validators.required,
+        this.nameParam(this.minLon),
+        this.nameValidator
+      ])],
       url: ['']
     });
 
@@ -32,4 +37,23 @@ export class FormTripComponent implements OnInit {
     this.onItemAdded.emit(d);
     return false;
   }
+  nameValidator(control: FormControl): { [s: string]: boolean } {
+  const l = control.value.toString().trim().length;
+  if(l>0 && l<5)
+  {
+    return {invalidName: true};
+  }
+  return {invalidName:false};
+}
+nameParam(minLong: number){
+  return (control: FormControl): { [s: string]: boolean } | null =>{
+    const l = control.value.toString().trim().length;
+  if(l>0 && l< minLong)
+  {
+    return {longName: true};
+  }
+  return null;
+  }
+ 
+}
 }
