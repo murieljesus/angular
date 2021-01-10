@@ -9,9 +9,17 @@ import {DestApiClient} from './../models/dest-api-client.model';
 })
 export class ListComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<destino>;
+   updates: string[];
 //destination: destino[];
   constructor(public destApiClient: DestApiClient) { 
     this.onItemAdded = new EventEmitter();
+    this.updates =[];
+    this.destApiClient.suscribeOnChange((d: destino)=>{
+      if(d != null){
+        this.updates.push('se suscribio a '+ d.n);
+
+      }
+    });
     //this.destination=[];
   }
 
@@ -24,8 +32,7 @@ export class ListComponent implements OnInit {
   }
 
   chosen(e: destino){
-    this.destApiClient.getAll().forEach(x => x.setSelected(false));
-    e.setSelected(true);
+    this.destApiClient.pick(e);
 
   }
 }
