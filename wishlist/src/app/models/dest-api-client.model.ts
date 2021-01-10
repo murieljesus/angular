@@ -14,6 +14,7 @@ export class DestApiClient {
 	getAll() {
 		return this.destination;
 	}
+	//new fuction
 	pick(d: destino) {
 		this.destination.forEach(x => x.setSelected(false));
 		d.setSelected(true);
