@@ -1,6 +1,10 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import { fromEvent } from 'rxjs';
 import {destino} from '../models/trip.models';
+import { map, filter, debounceTime, distinctUntilChanged, switchMap  } from 'rxjs/operators';
+import { ajax  } from 'rxjs/ajax';
+
 
 @Component({
   selector: 'app-form-trip',
@@ -11,8 +15,11 @@ export class FormTripComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<destino>;
   fg: FormGroup;
   minLon = 3;
+  searchResult: string [];
   constructor(private fb: FormBuilder) {
     //init
+    this.searchResult = [];
+  
     this.onItemAdded = new EventEmitter();
     //vinculacion con tag html
     this.fg = this.fb.group({
@@ -30,7 +37,18 @@ export class FormTripComponent implements OnInit {
         })
    }
 
-  ngOnInit(): void {
+  ngOnInit(): void  {
+    let elementName = <HTMLInputElement>document.getElementById('name');
+    fromEvent(elementName, 'input')
+    .pipe(
+      map((e: KeyboardEvent) =>(e.target as HTMLInputElement).value),
+      filter(text => text.length > 2),
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(() => ajax('/assets/data.json'))
+    ).subscribe(AjaxResponse => {
+      this.searchResult = AjaxResponse.response;
+    })
   }
   saves(name: string, url: string): boolean {
     const d = new destino(name, url);
